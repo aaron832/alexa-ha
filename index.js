@@ -90,6 +90,8 @@ app.intent('Switch', {
     var action = request.slot('Action').toUpperCase();
     var itemName = request.slot('ItemName');
     var location = request.slot('Location');
+
+    if (typeof(location) === "undefined" || location === null) { location = 'default'; }
  
     // DEBUG response
     //console.log('RawResponseData: ',request.data);
@@ -105,9 +107,9 @@ app.intent('Switch', {
     }
     
     // TODO validate location slot with checkLocation(location)
-    
     if (action && itemName && location && HA_item) {
         // Get current state
+        console.log('HA_item: ' + HA_item);
         HA.getState(HA_item, function (err, state) {
             if (err) {
                 console.log('HA getState failed:  ' + err.message);
@@ -127,7 +129,7 @@ app.intent('Switch', {
             }
         });
     } else {
-        replyWith('I cannot currently switch your ' + location + ' ' + itemName, response);
+        replyWith('Ii cannot currently switch your ' + location + ' ' + itemName, response);
     } 
     return false;
 });
