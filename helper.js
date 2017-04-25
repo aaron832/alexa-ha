@@ -1,6 +1,16 @@
 var config = require('./config');
 
 /************** CONFIG HELPER *********************/
+// Get itemName from modeType & modeName
+function getWant(actionType,itemName) {
+    for(var key in config.want) {
+        if(config.want.hasOwnProperty(actionType)) {
+            return config.mode[actionType][itemName];
+        }
+    }
+    return false;
+}
+
 // Get itemName from itemType & location
 function getItem(itemType, location) {
     //Handle variances of itemType for config value lookup

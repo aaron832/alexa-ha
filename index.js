@@ -82,6 +82,36 @@ app.pre = function(request,response,type) {
 /*************** Define ALEXA ASK Intents *****************************/
 //TODO: move all Intent say/card verbiage to config.js
 
+// Want triggers
+app.intent('Want', {
+	"slots":{"Action":"LITERAL","ItemName":"LITERAL"}
+	,"utterances":config.utterances.Want
+},function(request,response) {
+	var action = request.slot('Action');
+	var itemName = request.slot('ItemName');
+	
+	console.log('REQUEST: Want Intent slots are: ' + action + '/' + itemName + '/' + location);
+	
+	// Handle undefined ASK slots
+    if (itemName) {
+        var HA_item = helper.getWant(action, itemName);
+    }
+    else {
+        replyWith('I cannot switch that', response);
+        return;
+    }
+    
+    if (action && itemName && HA_item) {
+        // Get current state
+        console.log('HA_item: ' + HA_item);
+        HA.setState(HA_item, action);
+        replyWith('Enjoy your ' + itemName, response);
+    } else {
+        replyWith('I cannot let you ' + action + ' ' + itemName, response);
+    } 
+    return false;
+});
+
 // Switch devices ON/OFF
 app.intent('Switch', {
     "slots":{"Action":"LITERAL","ItemName":"LITERAL","Location":"LOCATION_TYPE"}
