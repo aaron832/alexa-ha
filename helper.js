@@ -5,7 +5,7 @@ var config = require('./config');
 function getWant(actionType,itemName) {
     for(var key in config.want) {
         if(config.want.hasOwnProperty(actionType)) {
-            return config.mode[actionType][itemName];
+            return config.want[actionType][itemName];
         }
     }
     return false;
@@ -94,6 +94,7 @@ function checkLocation(location) {
 }
 
 // Exports
+module.exports.getWant = getWant;
 module.exports.getItem = getItem;
 module.exports.getMetric = getMetric;
 module.exports.getUnit = getUnit;

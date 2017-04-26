@@ -90,7 +90,7 @@ app.intent('Want', {
 	var action = request.slot('Action');
 	var itemName = request.slot('ItemName');
 	
-	console.log('REQUEST: Want Intent slots are: ' + action + '/' + itemName + '/' + location);
+	console.log('REQUEST: Want Intent slots are: ' + action + '/' + itemName);
 	
 	// Handle undefined ASK slots
     if (itemName) {
