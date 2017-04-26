@@ -93,7 +93,7 @@ app.intent('Want', {
 	console.log('REQUEST: Want Intent slots are: ' + action + '/' + itemName);
 	
 	// Handle undefined ASK slots
-    if (itemName) {
+    if (action && itemName) {
         var HA_item = helper.getWant(action, itemName);
     }
     else {
@@ -101,12 +101,21 @@ app.intent('Want', {
         return;
     }
     
-    if (action && itemName && HA_item) {
-        // Get current state
-        console.log('HA_item: ' + HA_item);
-        HA.setState(HA_item, action);
-        replyWith('Enjoy your ' + itemName, response);
-    } else {
+    if (HA_item) {
+        // Get current state to make sure it exists
+		HA.getState(HA_item, function (err, state) {
+			if (err) {
+				console.log('HA getState failed:  ' + err.message);
+				replyWith('Unable to talk to openhab');
+			}
+			else {
+				console.log('HA_item: ' + HA_item);
+				HA.setState(HA_item, 'ON');
+				replyWith('Enjoy your ' + itemName, response);
+			}
+		}
+    } 
+	else {
         replyWith('I cannot let you ' + action + ' ' + itemName, response);
     } 
     return false;
@@ -143,6 +152,7 @@ app.intent('Switch', {
         HA.getState(HA_item, function (err, state) {
             if (err) {
                 console.log('HA getState failed:  ' + err.message);
+				replyWith('Unable to talk to openhab');
             }
             // Check if the items current state and action match
             if (state === action) {
