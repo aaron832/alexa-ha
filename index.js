@@ -113,7 +113,7 @@ app.intent('Want', {
 				HA.setState(HA_item, 'ON');
 				replyWith('Enjoy your ' + itemName, response);
 			}
-		}
+		});
     } 
 	else {
         replyWith('I cannot let you ' + action + ' ' + itemName, response);
