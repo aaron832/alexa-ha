@@ -2,6 +2,10 @@ var config = require('./config');
 
 /************** CONFIG HELPER *********************/
 // Get itemName from modeType & modeName
+function getExecute(itemName) {
+    return config.execute[itemName];
+}
+	
 function getWant(actionType,itemName) {
     for(var key in config.want) {
         if(config.want.hasOwnProperty(actionType)) {
@@ -94,6 +98,7 @@ function checkLocation(location) {
 }
 
 // Exports
+module.exports.getExecute = getExecute;
 module.exports.getWant = getWant;
 module.exports.getItem = getItem;
 module.exports.getMetric = getMetric;

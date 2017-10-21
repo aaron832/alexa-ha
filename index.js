@@ -82,6 +82,44 @@ app.pre = function(request,response,type) {
 /*************** Define ALEXA ASK Intents *****************************/
 //TODO: move all Intent say/card verbiage to config.js
 
+// Execute triggers
+app.intent('Execute', {
+	"slots":{"ItemName":"LITERAL"}
+	,"utterances":config.utterances.Execute
+},function(request,response) {
+	var itemName = request.slot('ItemName');
+
+	console.log('REQUEST: Want Intent slots are: ' +  itemName);
+
+	// Handle undefined ASK slots
+	if (itemName) {
+		var HA_item = helper.getExecute(itemName);
+	}
+	else {
+		replyWith('I cannot execute ' + itemName, response);
+		return;
+	}
+
+	if (HA_item) {
+		// Get current state to make sure it exists
+		HA.getState(HA_item, function (err, state) {
+		if (err) {
+			console.log('HA getState failed:  ' + err.message);
+			replyWith('Unable to talk to openhab');
+		}
+		else {
+			console.log('HA_item: ' + HA_item);
+			HA.setState(HA_item, 'ON');
+			replyWith(itemName + ' executed', response);
+		}
+		});
+	}
+	else {
+		replyWith('I cannot execute ' + itemName, response);
+	}
+	return false;
+});
+
 // Want triggers
 app.intent('Want', {
 	"slots":{"Action":"LITERAL","ItemName":"LITERAL"}

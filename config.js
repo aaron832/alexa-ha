@@ -72,6 +72,11 @@ config.HA_item_answer = 'ECHO_Answer';
 // Array of available rooms that HA has devices in, used for validations & re-prompts
 config.HA_locations = ['all','house','living room','hallway','kitchen','master bedroom','garage','office','inside','indoor','outside','outdoor'];
 
+// Execute configuration
+config.execute = {
+    'lock it down': 'alexa_media_center_execute_lockitdown'
+};
+
 // Want configuration - verbType / objectType / itemName mapping
 config.want = {
     'watch': {
@@ -288,6 +293,10 @@ config.color = {
 // Configure ASK Intent utterances using Alexa-App - reference:
 //  https://www.npmjs.com/package/alexa-app#schema-and-utterances for syntax
 config.utterances = {
+    // Execute
+    'Execute': [
+	"{to |} execute {protocol|operation| } {lock it down|ItemName}"
+    ],
     // Want modes
     'Want': [
         "I want to {play|Action} {games|ItemName}",
