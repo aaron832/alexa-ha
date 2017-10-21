@@ -290,9 +290,9 @@ config.color = {
 config.utterances = {
     // Want modes
     'Want': [
-        "{I want to |} {play|Action} {games|ItemName}",
-        "{I want to |} {watch|Action} {netflix|ItemName}",
-        "{I want to |} {listen|Action} {to |} {music|ItemName}"
+        "I want to {play|Action} {games|ItemName}",
+        "I want to {watch|Action} {netflix|ItemName}",
+        "I want to {listen|Action} to {music|ItemName}"
     ],
     // Switch devices ON/OFF in a particular room
     'Switch': [
