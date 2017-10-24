@@ -135,7 +135,7 @@ app.intent('Want', {
         var HA_item = helper.getWant(action, itemName);
     }
     else {
-        replyWith('I cannot switch that', response);
+        replyWith(action + ' and ' + itemName + ' lookup failed', response);
         return;
     }
     
@@ -149,7 +149,12 @@ app.intent('Want', {
 			else {
 				console.log('HA_item: ' + HA_item);
 				HA.setState(HA_item, 'ON');
-				replyWith('Enjoy your ' + itemName, response);
+				if (action === "stop") {
+					replyWith('stopping ' + itemName, response);
+				}
+				else {
+					replyWith('Enjoy your ' + itemName, response);
+				}
 			}
 		});
     } 

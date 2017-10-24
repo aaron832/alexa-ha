@@ -80,13 +80,30 @@ config.execute = {
 // Want configuration - verbType / objectType / itemName mapping
 config.want = {
     'watch': {
-        'netflix': 'alexa_media_center_default_netflix'
+        'netflix': 'alexa_media_center_default_netflix',
+	'ponyo': 'alexa_media_center_watch_ponyo',
+	'kid movie': 'alexa_media_center_watch_kidsmovie',
+	'family movie': 'alexa_media_center_watch_kidsmovie',
+	'movie': 'alexa_media_center_watch_kidsmovie'
     },
     'play': {
-	'games': 'alexa_media_center_default_games'
+	'games': 'alexa_media_center_default_games',
+	'music': 'alexa_media_center_default_music',
+        'spotify': 'alexa_media_center_default_music'
     },
     'listen': {
-	'music': 'alexa_media_center_default_music'
+	'music': 'alexa_media_center_default_music',
+	'spotify': 'alexa_media_center_default_music',
+	'airplay': 'alexa_media_center_listen_airplay'
+    },
+    'stop': {
+	'music': 'alexa_media_center_stop_music',
+	'spotify': 'alexa_media_center_stop_music',
+	'air play': 'alexa_media_center_stop_airplay',
+	'ponyo': 'alexa_media_center_stop_vlc',
+	'kid movie': 'alexa_media_center_stop_vlc',
+	'family movie': 'alexa_media_center_stop_vlc',
+	'movie': 'alexa_media_center_stop_vlc'
     }
 };
 
@@ -299,9 +316,11 @@ config.utterances = {
     ],
     // Want modes
     'Want': [
-        "I want to {play|Action} {games|ItemName}",
-        "I want to {watch|Action} {netflix|ItemName}",
-        "I want to {listen|Action} to {music|ItemName}"
+        "I want to {play|Action} {games|music|spotify|ItemName}",
+        "I want to {watch|Action} {netflix|Ponyo|ItemName}",
+	"I want to {watch|Action} a {kid movie|family movie|movie|ItemName}",
+        "I want to {listen|Action} to {music|airplay|spotify|ItemName}",
+	"{I want |} to {stop|Action} {the |} {Ponyo|kid movie|family movie|movie|music|air play|spotify|ItemName}",
     ],
     // Switch devices ON/OFF in a particular room
     'Switch': [
@@ -379,10 +398,10 @@ config.utterances = {
     ],
     // Stop Intent
     'Stop': [
-        "{to |} stop {that |}",
-        "{to |} quit {that |}",
-        "{to |} exit {that |}",
-        "{to |} never mind {that |}"
+        "{to |} disabled stop {that |}",
+        "{to |} disabled quit {that |}",
+        "{to |} disabled exit {that |}",
+        "{to |} disabled never mind {that |}"
     ],
     // Cancel Intent
     'Cancel': [
