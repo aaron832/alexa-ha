@@ -89,7 +89,7 @@ app.intent('Execute', {
 },function(request,response) {
 	var itemName = request.slot('ItemName');
 
-	console.log('REQUEST: Want Intent slots are: ' +  itemName);
+	console.log('REQUEST: Execute Intent slots are: ' +  itemName);
 
 	// Handle undefined ASK slots
 	if (itemName) {
@@ -110,7 +110,18 @@ app.intent('Execute', {
 		else {
 			console.log('HA_item: ' + HA_item);
 			HA.setState(HA_item, 'ON');
-			replyWith(itemName + ' executed', response);
+			setTimeout(function() {
+				HA.getState('alexaresp', function (err, alexaResp) {
+				if (err) {
+					console.log('Alexa Response Get failed: ' + err.message);
+					replyWith(itemName + ' executed. ' + 'Failed comment', response);
+				}
+				else { 
+					replyWith(itemName + ' executed. ' + alexaResp, response);
+				}
+				});
+				HA.setState('alexaresp', '');
+			}, 500);
 		}
 		});
 	}

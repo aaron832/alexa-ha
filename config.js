@@ -74,7 +74,8 @@ config.HA_locations = ['all','house','living room','hallway','kitchen','master b
 
 // Execute configuration
 config.execute = {
-    'lock it down': 'alexa_media_center_execute_lockitdown'
+    'lock it down': 'alexa_media_center_execute_lockitdown',
+    'test': 'alexa_execute_test'
 };
 
 // Want configuration - verbType / objectType / itemName mapping
@@ -312,7 +313,7 @@ config.color = {
 config.utterances = {
     // Execute
     'Execute': [
-	"{to |} execute {protocol|operation| } {lock it down|ItemName}"
+	"{to |} execute {protocol|operation| } {test|lock it down|ItemName}"
     ],
     // Want modes
     'Want': [
