@@ -15,6 +15,10 @@ function getWant(actionType,itemName) {
     return false;
 }
 
+function getService(serviceName) {
+    return config.service[serviceName];
+}
+
 // Get itemName from itemType & location
 function getItem(itemType, location) {
     //Handle variances of itemType for config value lookup
@@ -99,6 +103,7 @@ function checkLocation(location) {
 
 // Exports
 module.exports.getExecute = getExecute;
+module.exports.getService = getService;
 module.exports.getWant = getWant;
 module.exports.getItem = getItem;
 module.exports.getMetric = getMetric;

@@ -81,31 +81,38 @@ config.execute = {
 // Want configuration - verbType / objectType / itemName mapping
 config.want = {
     'watch': {
-        'netflix': 'alexa_media_center_default_netflix',
+    'netflix': 'alexa_media_center_default_netflix',
 	'ponyo': 'alexa_media_center_watch_ponyo',
 	'kid movie': 'alexa_media_center_watch_kidsmovie',
 	'family movie': 'alexa_media_center_watch_kidsmovie',
 	'movie': 'alexa_media_center_watch_kidsmovie'
     },
     'play': {
-	'games': 'alexa_media_center_default_games',
-	'music': 'alexa_media_center_default_music',
-        'spotify': 'alexa_media_center_default_music'
+    'games': 'alexa_media_center_default_games',
+    'music': 'alexa_media_center_default_music',
+    'spotify': 'alexa_media_center_default_music'
     },
     'listen': {
-	'music': 'alexa_media_center_default_music',
-	'spotify': 'alexa_media_center_default_music',
-	'airplay': 'alexa_media_center_listen_airplay'
+    'music': 'alexa_media_center_default_music',
+    'spotify': 'alexa_media_center_default_music',
+    'airplay': 'alexa_media_center_listen_airplay'
     },
     'stop': {
-	'music': 'alexa_media_center_stop_music',
-	'spotify': 'alexa_media_center_stop_music',
-	'air play': 'alexa_media_center_stop_airplay',
-	'ponyo': 'alexa_media_center_stop_vlc',
-	'kid movie': 'alexa_media_center_stop_vlc',
-	'family movie': 'alexa_media_center_stop_vlc',
-	'movie': 'alexa_media_center_stop_vlc'
+    'music': 'alexa_media_center_stop_music',
+    'spotify': 'alexa_media_center_stop_music',
+    'air play': 'alexa_media_center_stop_airplay',
+    'ponyo': 'alexa_media_center_stop_vlc',
+    'kid movie': 'alexa_media_center_stop_vlc',
+    'family movie': 'alexa_media_center_stop_vlc',
+    'movie': 'alexa_media_center_stop_vlc',
+    'netflix': 'alexa_media_center_stop_netflix',
+    'everything': 'alexa_media_center_stop_everything'
     }
+};
+
+config.service = {
+    'Netflix': 'alexa_playsearchnetflix',
+    'Kodi': 'alexa_playsearchkodi'
 };
 
 // Item configuration - itemType / Location / itemName mappings
@@ -153,6 +160,7 @@ config.item = {
         'house': 'Scene_General',
         'lighting': 'Scene_Lighting',
         'security': 'Scene_Security',
+        'netflix': 'alexa_netflixprof',
         default: 'Scene_General'
     },
     'thermostat': {
@@ -180,9 +188,9 @@ config.item = {
 // Mode/Scene names to Scene ID mappings
 config.mode = {
     'tv': {
-	'p. c.': 'pc',
+        'p. c.': 'pc',
         'computer': 'pc',
-	'games': 'wii',
+        'games': 'wii',
         'wii': 'wii',
     },
     'house': {
@@ -316,19 +324,27 @@ config.utterances = {
 	"{to |} execute {protocol|operation| } {test|lock it down|ItemName}"
     ],
     // Want modes
+    'ServiceMovie': [
+        "I want to watch {-|MovieName} on {-|ServiceName}"
+    ],
+    // Want modes
+    'ServiceTV': [
+        "I want to watch {-|TVShowName} on {-|ServiceName}"
+    ],
+    // Want modes
     'Want': [
-        "I want to {play|Action} {games|music|spotify|ItemName}",
         "I want to {watch|Action} {netflix|Ponyo|ItemName}",
-	"I want to {watch|Action} a {kid movie|family movie|movie|ItemName}",
+        "I want to {watch|Action} a {kid movie|family movie|movie|ItemName}",
+        "I want to {play|Action} {games|music|spotify|ItemName}",
         "I want to {listen|Action} to {music|airplay|spotify|ItemName}",
-	"{I want |} to {stop|Action} {the |} {Ponyo|kid movie|family movie|movie|music|air play|spotify|ItemName}",
+        "{I want |} to {stop|Action} {the |} {everything|netflix|ponyo|kid movie|family movie|movie|music|airplay|spotify|ItemName}"
     ],
     // Switch devices ON/OFF in a particular room
     'Switch': [
-        "{to |} {turn|switch|flip} {ON|OFF|Action} {the|my |} {tv|light|lights|motion lighting|fan|stove|music|ItemName} {in the |} {-|Location}",
-        "{to |} {turn|switch|flip} {ON|OFF|Action} {the|my |} {-|Location} {tv|light|lights|motion lighting|fan|stove|music|ItemName}",
-        "{to |} {turn|switch|flip} {the|my |} {-|Location} {tv|light|lights|motion lighting|fan|stove|music|ItemName} {ON|OFF|Action}",
-        "{to |} {turn|switch|flip} {the|my |} {tv|light|lights|motion lighting|fan|stove|music|ItemName} {ON|OFF|Action} {in the |} {-|Location}"
+        "{to |} {turn|switch|flip} {ON|OFF|Action} {the|my |} {tv|media center|receiver|light|lights|motion lighting|fan|stove|music|ItemName} {in the |} {-|Location}",
+        "{to |} {turn|switch|flip} {ON|OFF|Action} {the|my |} {-|Location} {tv|media center|receiver|light|lights|motion lighting|fan|stove|music|ItemName}",
+        "{to |} {turn|switch|flip} {the|my |} {-|Location} {tv|media center|receiver|light|lights|motion lighting|fan|stove|music|ItemName} {ON|OFF|Action}",
+        "{to |} {turn|switch|flip} {the|my |} {tv|media center|receiver|light|lights|motion lighting|fan|stove|music|ItemName} {ON|OFF|Action} {in the |} {-|Location}"
     ],
     // Set HSB color values for lights in a particular room
     'SetColor': [
@@ -352,6 +368,7 @@ config.utterances = {
     // Set house/lighting/security/etc scenes
     'SetMode': [
         "{to |} {set|change|switch} {the|my |} {tv|ModeType} mode to {computer|p. c.|games|wii|ModeName}",
+        "{to |} {set|change|switch} {the|my |} {netflix|ModeType} profile to {Aaron|Brenna|Emi|ModeName}",
         "{to |} {set|change|switch} {the|my |} {house|ModeType} mode to {off|work|dinner|party|bed|away|panic|relax|gaming|theatre|shower|wake up|TV|ModeName}",
         "{to |} {set|change|switch} {the|my |} {lighting|ModeType} mode to {all off|all on|focus|energize|relax|party|night light|bed time|love shack|lava|ModeName}",
         "{to |} {set|change|switch} {the|my |} {security|ModeType} mode to {off|sleep|home|away|ModeName}",

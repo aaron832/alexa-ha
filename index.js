@@ -105,7 +105,7 @@ app.intent('Execute', {
 		HA.getState(HA_item, function (err, state) {
 		if (err) {
 			console.log('HA getState failed:  ' + err.message);
-			replyWith('Unable to talk to openhab');
+			replyWith('Unable to talk to openhab', response);
 		}
 		else {
 			console.log('HA_item: ' + HA_item);
@@ -121,7 +121,7 @@ app.intent('Execute', {
 				}
 				});
 				HA.setState('alexaresp', '');
-			}, 500);
+			}, 3000);
 		}
 		});
 	}
@@ -154,8 +154,8 @@ app.intent('Want', {
         // Get current state to make sure it exists
 		HA.getState(HA_item, function (err, state) {
 			if (err) {
-				console.log('HA getState failed:  ' + err.message);
-				replyWith('Unable to talk to openhab');
+                console.log('HA getState for ' + HA_item + ' failed:  ' + err.message);
+                replyWith('Unable to get state from openhab for ' + action + ' ' + itemName, response);
 			}
 			else {
 				console.log('HA_item: ' + HA_item);
@@ -170,7 +170,103 @@ app.intent('Want', {
 		});
     } 
 	else {
-        replyWith('I cannot let you ' + action + ' ' + itemName, response);
+        replyWith('I do not know how to ' + action + ' ' + itemName, response);
+    } 
+    return false;
+});
+
+// Service Movie
+app.intent('ServiceMovie', {
+    "slots":{"MovieName":"AMAZON.Movie","ServiceName":"LITERAL"}
+    ,"utterances":config.utterances.ServiceMovie
+},function(request,response) {
+    var itemName = request.slot('MovieName');
+    var serviceName = request.slot('ServiceName');
+    
+    console.log('REQUEST: ServiceMovie, Intent slots are: ' + itemName + ' on ' + serviceName);
+    
+    if(itemName == "" && serviceName != "") {
+        replyWith('Heard no name for ' + serviceName + ' service request', response);
+        return;
+    }
+    else if(serviceName == "" && itemName != "") {
+        replyWith('Heard no service name for ' + itemName + ' service request', response);
+        return;
+    }
+    else if(serviceName == "" && itenName == "") {
+        replyWith('I heard a service request, but heard no name or service.', response);
+    }
+    // Handle undefined ASK slots
+    var HA_item = helper.getService(serviceName);
+    if (HA_item) {
+        // Get current state to make sure it exists
+        HA.getState(HA_item, function (err, state) {
+            if (err) {
+                console.log('HA getState for ' + HA_item + ' failed:  ' + err.message);
+                replyWith('Unable to get state from openhab for ' + serviceName, response);
+            }
+            else {
+                console.log('HA_item: ' + HA_item);
+                //if(HA.setState(HA_item, itemName)) {
+                    HA.setState(HA_item, itemName);
+                    replyWith('Enjoy your ' + itemName, response);
+                //}
+                //else {
+                //    replyWith('Unable to set state to openhab for ' + serviceName, response);
+                //}
+            }
+        });
+    } 
+    else {
+        replyWith('I do not know how to ' + itemName + ' on ' + serviceName + ' service.', response);
+    } 
+    return false;
+});
+
+// Service Movie
+app.intent('ServiceTV', {
+    "slots":{"TVShowName":"AMAZON.TVSeries","ServiceName":"LITERAL"}
+    ,"utterances":config.utterances.ServiceTV
+},function(request,response) {
+    var itemName = request.slot('TVShowName');
+    var serviceName = request.slot('ServiceName');
+    
+    console.log('REQUEST: ServiceTV, Intent slots are: ' + itemName + ' on ' + serviceName);
+    
+    if(itemName == "" && serviceName != "") {
+        replyWith('Heard no name for ' + serviceName + ' service request', response);
+        return;
+    }
+    else if(serviceName == "" && itemName != "") {
+        replyWith('Heard no service name for ' + itemName + ' service request', response);
+        return;
+    }
+    else if(serviceName == "" && itenName == "") {
+        replyWith('I heard a service request, but heard no name or service.', response);
+    }
+    // Handle undefined ASK slots
+    var HA_item = helper.getService(serviceName);
+    if (HA_item) {
+        // Get current state to make sure it exists
+        HA.getState(HA_item, function (err, state) {
+            if (err) {
+                console.log('HA getState for ' + HA_item + ' failed:  ' + err.message);
+                replyWith('Unable to get state from openhab for ' + serviceName, response);
+            }
+            else {
+                console.log('HA_item: ' + HA_item);
+                //if(HA.setState(HA_item, itemName)) {
+                    HA.setState(HA_item, itemName);
+                    replyWith('Enjoy your ' + itemName, response);
+                //}
+                //else {
+                //    replyWith('Unable to set state to openhab for ' + serviceName, response);
+                //}
+            }
+        });
+    } 
+    else {
+        replyWith('I do not know how to ' + itemName + ' on ' + serviceName + ' service.', response);
     } 
     return false;
 });
@@ -206,7 +302,7 @@ app.intent('Switch', {
         HA.getState(HA_item, function (err, state) {
             if (err) {
                 console.log('HA getState failed:  ' + err.message);
-				replyWith('Unable to talk to openhab');
+				replyWith('Unable to talk to openhab', response);
             }
             // Check if the items current state and action match
             if (state === action) {
@@ -387,8 +483,14 @@ app.intent('SetMode', {
     //console.log('RawResponseData: ',request.data);
     console.log('REQUEST: SetMode Intent slots are: ' + modeType + '/' + modeName);
 
+    var modeId;
     if (modeType && modeName) {
-        var modeId = helper.getMode(modeType, modeName);
+        if(modeType === "netflix") {
+            modeId = modeName;
+        } 
+        else {
+            modeId = helper.getMode(modeType, modeName);
+        }
         var HA_item = helper.getItem('mode', modeType);
     }
     else {
@@ -401,7 +503,7 @@ app.intent('SetMode', {
         replyWith('Changing your ' + modeType + ' mode to ' + modeName, response);
     }
     else {
-        replyWith('I cannot currently set your ' + modeType + ' mode to ' + modeName);
+        replyWith('I cannot currently set your ' + modeType + ' mode to ' + modeName, response);
     }
 });
 
