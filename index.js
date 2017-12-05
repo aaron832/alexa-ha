@@ -472,6 +472,26 @@ app.intent('SetTemp', {
 });
 
 // Set modes (house/lighting/security scenes)
+app.intent('SetNetflixProfile', {
+    "slots":{"ProfileName":"PROFILE_NAME"}
+    ,"utterances":config.utterances.SetNetflixProfile
+},function(request,response) {
+    var profileName = request.slot('ProfileName');
+
+    // DEBUG response
+    //console.log('RawResponseData: ',request.data);
+    console.log('REQUEST: SetNetflixProfile to: ' + profileName);
+
+    if (profileName) {
+        HA.setState('alexa_netflixprof', profileName);
+        replyWith('Changing your netflix profile to ' + profileName, response);
+    }
+    else {
+        replyWith('I cannot currently set your netflix profile to ' + profileName, response);
+    }
+});
+
+// Set modes (house/lighting/security scenes)
 app.intent('SetMode', {
     "slots":{"ModeType":"LITERAL","ModeName":"LITERAL"}
     ,"utterances":config.utterances.SetMode
@@ -485,12 +505,7 @@ app.intent('SetMode', {
 
     var modeId;
     if (modeType && modeName) {
-        if(modeType === "netflix") {
-            modeId = modeName;
-        } 
-        else {
-            modeId = helper.getMode(modeType, modeName);
-        }
+        modeId = helper.getMode(modeType, modeName);
         var HA_item = helper.getItem('mode', modeType);
     }
     else {

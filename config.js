@@ -117,9 +117,17 @@ config.service = {
 
 // Item configuration - itemType / Location / itemName mappings
 config.item = {
-    'tv': {
+    'media center' : {
         'living': 'alexa_media_center_power',
         default: 'alexa_media_center_power'
+    },
+    'tv': {
+        'living': 'alexa_tv_power',
+        default: 'alexa_tv_power'
+    },
+    'receiver': {
+        'living': 'alexa_receiver_power',
+        default: 'alexa_receiver_power'
     },
     'light': {
         'hallway': 'zwave_node2_uphallway_dimmer',
@@ -160,7 +168,6 @@ config.item = {
         'house': 'Scene_General',
         'lighting': 'Scene_Lighting',
         'security': 'Scene_Security',
-        'netflix': 'alexa_netflixprof',
         default: 'Scene_General'
     },
     'thermostat': {
@@ -366,15 +373,18 @@ config.utterances = {
         "{to |} {set|change|adjust} {the|my |} {thermostat|temperature} {in the|in my |} {-|Location} to {60-80|Degree} {degrees |}"
     ],
     // Set house/lighting/security/etc scenes
+    'SetNetflixProfile': [
+        "{to |} {set|change|switch} {the|my |} netflix profile to {-|ProfileName}"
+    ],
+    // Set house/lighting/security/etc scenes
     'SetMode': [
-        "{to |} {set|change|switch} {the|my |} {tv|ModeType} mode to {computer|p. c.|games|wii|ModeName}",
-        "{to |} {set|change|switch} {the|my |} {netflix|ModeType} profile to {Aaron|Brenna|Emi|ModeName}",
+        "{to |} {set|change|switch} {the|my |} {tv|ModeType} mode to {computer|p. c.|games|wii|ModeName}"/*,
         "{to |} {set|change|switch} {the|my |} {house|ModeType} mode to {off|work|dinner|party|bed|away|panic|relax|gaming|theatre|shower|wake up|TV|ModeName}",
         "{to |} {set|change|switch} {the|my |} {lighting|ModeType} mode to {all off|all on|focus|energize|relax|party|night light|bed time|love shack|lava|ModeName}",
         "{to |} {set|change|switch} {the|my |} {security|ModeType} mode to {off|sleep|home|away|ModeName}",
         "{to |} {set|change|switch} {the|my |} {house|ModeType} to {off|work|dinner|party|bed|away|panic|relax|gaming|theatre|shower|wake up|TV|ModeName} mode",
         "{to |} {set|change|switch} {the|my |} {lighting|ModeType} to {all off|all on|focus|energize|relax|party|night light|bed time|love shack|lava|ModeName} mode",
-        "{to |} {set|change|switch} {the|my |} {security|ModeType} to {off|sleep|home|away|ModeName} mode"
+        "{to |} {set|change|switch} {the|my |} {security|ModeType} to {off|sleep|home|away|ModeName} mode"*/
     ],
     // Get current item state values
     'GetState': [
