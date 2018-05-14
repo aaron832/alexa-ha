@@ -70,7 +70,8 @@ config.HA_item_voicecmd = 'ECHO_VoiceCMD';
 config.HA_item_answer = 'ECHO_Answer';
 
 // Array of available rooms that HA has devices in, used for validations & re-prompts
-config.HA_locations = ['all','house','living room','hallway','kitchen','master bedroom','garage','office','inside','indoor','outside','outdoor'];
+// Currently not used
+config.HA_locations = ['all','house','living room','hallway','kitchen','master bedroom','garage','office','inside','indoor','outside','outdoor','stairs','downstairs','laundry room'];
 
 // Execute configuration
 config.execute = {
@@ -121,6 +122,12 @@ config.item = {
         'living': 'alexa_media_center_power',
         default: 'alexa_media_center_power'
     },
+    'door bell' : {
+        default: 'alexa_doorbell'
+    },
+    'doorbell' : {
+	default: 'alexa_doorbell'
+    },
     'tv': {
         'living': 'alexa_tv_power',
         default: 'alexa_tv_power'
@@ -130,9 +137,18 @@ config.item = {
         default: 'alexa_receiver_power'
     },
     'light': {
-        'hallway': 'zwave_node2_uphallway_dimmer',
+        'backyard': 'BackYardLights_Switch',
+	'back yard': 'BackYardLights_Switch',
+	'hallway': 'zwave_node2_uphallway_dimmer',
         'garage': 'zwave_node3_garagelight_switch',
-        'kitchen': 'Light_Group_Kitchen',
+        'laundry': 'zwav_node5_laundryroomlight_switch',
+        'outdoor': 'zwav_node6_outdoorlighting_switch',
+        'outside': 'zwav_node6_outdoorlighting_switch',
+        'kitchen': 'nothing',
+        'living': 'zwave_node7_livingroom_dimmer_interface',
+        'office': 'nothing',
+        'downstairs': 'nothing',
+        'stairs': 'nothing',
         'all': 'Light_Group_All',
         default: 'Light_Group_All'
     },
@@ -159,9 +175,9 @@ config.item = {
         default: 'PC_Desktop_Pandora'
     },
     'volume': {
-        'living room': 'Living_Volume',
+        'living': 'yamahareceiver_volume',
         'office': 'Office_Volume',
-        default: 'Office_Volume'
+        default: 'yamahareceiver_volume'
     },
     'mode': {
         'tv': 'alexa_tv_mode',

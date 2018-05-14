@@ -319,7 +319,7 @@ app.intent('Switch', {
             }
         });
     } else {
-        replyWith('Ii cannot currently switch your ' + location + ' ' + itemName, response);
+        replyWith('I cannot currently switch your ' + location + ' ' + itemName, response);
     } 
     return false;
 });
