@@ -122,6 +122,10 @@ config.item = {
         'living': 'alexa_media_center_power',
         default: 'alexa_media_center_power'
     },
+    'bell' : {
+	door: 'alexa_doorbell',
+        default: 'alexa_doorbell'
+    },
     'door bell' : {
         default: 'alexa_doorbell'
     },
