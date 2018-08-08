@@ -96,7 +96,8 @@ config.want = {
     'listen': {
     'music': 'alexa_media_center_default_music',
     'spotify': 'alexa_media_center_default_music',
-    'airplay': 'alexa_media_center_listen_airplay'
+    'airplay': 'alexa_media_center_listen_airplay',
+    'spotify_playlist': 'alexa_media_center_listen_spotify_playlist'
     },
     'stop': {
     'music': 'alexa_media_center_stop_music',

@@ -138,6 +138,7 @@ app.intent('Want', {
 },function(request,response) {
 	var action = request.slot('Action');
 	var itemName = request.slot('ItemName');
+    var value = 'ON';
 	
 	console.log('REQUEST: Want Intent slots are: ' + action + '/' + itemName);
 	
@@ -145,12 +146,20 @@ app.intent('Want', {
     if (action && itemName) {
         var HA_item = helper.getWant(action, itemName);
     }
-    else {
-        replyWith(action + ' and ' + itemName + ' lookup failed', response);
-        return;
+    
+    if (!HA_item)
+    {
+        if(itemName && action == "listen") {
+            var HA_item = helper.getWant(action, "spotify_playlist");
+            value = itemName;
+        }
+        else {
+            replyWith(action + ' and ' + itemName + ' lookup failed', response);
+            return;
+        }
     }
     
-    if (HA_item) {
+    if(HA_item) {
         // Get current state to make sure it exists
 		HA.getState(HA_item, function (err, state) {
 			if (err) {
@@ -158,8 +167,8 @@ app.intent('Want', {
                 replyWith('Unable to get state from openhab for ' + action + ' ' + itemName, response);
 			}
 			else {
-				console.log('HA_item: ' + HA_item);
-				HA.setState(HA_item, 'ON');
+				console.log('HA_item: ' + HA_item + ' to ' +  value);
+				HA.setState(HA_item, value);
 				if (action === "stop") {
 					replyWith('stopping ' + itemName, response);
 				}
