@@ -1,0 +1,29 @@
+var mylogin = {};
+
+/******************************** GENERAL CONFIGURATION *****************************************/
+// AWS ASK applicationId, resembles 'amzn1.echo-sdk-ams.app.[your-unique-value-here]'
+mylogin.applicationId = 'amzn1.echo-sdk-ams.app.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX';
+
+// AWS ASK userID, resembles 'amzn1.echo-sdk-account.[your-unique-value-here]'
+mylogin.userId = 'amzn1.echo-sdk-account.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX';
+
+// AWS ASK password, randomly generated password to be included in the Skill's endpoint URL (i.e. '?password=XXXXXXXXXXXX')
+mylogin.password = '';
+
+// HA server protocol (http/https)
+mylogin.HA_protocol = 'http';
+
+// HA server username
+mylogin.HA_user = '';
+
+// HA server password
+mylogin.HA_password = '';
+
+// HA server FQDN/IP
+mylogin.HA_host = '127.0.0.1';
+
+// HA server port
+mylogin.HA_port = '';
+
+//Exports
+module.exports = mylogin;
